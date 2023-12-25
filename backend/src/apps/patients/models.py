@@ -15,7 +15,7 @@ class Patient(models.Model):
 
     # datos de identificación del paciente
     dni = models.CharField(max_length=10, unique=True, verbose_name=_("DNI"))
-    medical_record_number = models.PositiveIntegerField(
+    medical_record_id = models.PositiveIntegerField(
         null=True, blank=True, verbose_name=_("Medical record number")
     )
     first_name = models.CharField(max_length=20, verbose_name=_("First name"))
