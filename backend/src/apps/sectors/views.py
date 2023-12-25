@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from rest_framework.viewsets import ModelViewSet
 
-# Create your views here.
+from .models import Sector
+from .serializers import SectorSerializer
+
+
+class SectorViewSet(ModelViewSet):
+    serializer_class = SectorSerializer
+    queryset = Sector.objects.all()

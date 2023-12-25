@@ -29,11 +29,14 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "corsheaders",
+    "drf_spectacular",
     "rest_framework",
 ]
 
 PROJECT_APPS = [
+    "src.apps.appointments",
     "src.apps.diagnostics",
+    "src.apps.groups",
     "src.apps.patients",
     "src.apps.reports",
     "src.apps.sectors",
@@ -130,3 +133,8 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 AUTH_USER_MODEL = "users.User"
+
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
