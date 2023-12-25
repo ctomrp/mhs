@@ -10,4 +10,4 @@ class Diagnosis(models.Model):
     is_active = models.BooleanField(verbose_name=_("Active"), default=True)
 
     def __str__(self):
-        return _(self.name)
+        return self.name

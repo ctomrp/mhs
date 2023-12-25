@@ -8,4 +8,4 @@ class Group(models.Model):
     )
 
     def __str__(self):
-        return _(self.name)
+        return self.name

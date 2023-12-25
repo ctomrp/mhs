@@ -11,7 +11,7 @@ urlpatterns = [
     path("api/users/", include("src.apps.users.urls")),
     path("api/diagnostics/", include(diagnostics_router.urls)),
     path("api/groups/", include(groups_router.urls)),
-    path("api/patients/", include(patients_router.urls)),
+    path("api/patients/", include("src.apps.patients.urls")),
     path("api/sectors/", include(sectors_router.urls)),
     path(
         "api/docs/",
