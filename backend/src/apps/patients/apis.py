@@ -143,7 +143,7 @@ def get_total_pregnants(request):
 @api_view(["GET"])
 @authentication_classes((CustomUserAuthentication,))
 @permission_classes((IsAuthenticated,))
-def get_patients_by_diagnosis(request, diagnosis_id):
+def get_patients_by_diagnosis(request, diagnosis_id=None):
     try:
         patients = fetch_patients_by_diagnosis(diagnosis_id)
     except NotFound:
@@ -156,9 +156,77 @@ def get_patients_by_diagnosis(request, diagnosis_id):
 @api_view(["GET"])
 @authentication_classes((CustomUserAuthentication,))
 @permission_classes((IsAuthenticated,))
+def get_total_diagnostics(request, diagnosis_id):
+    total = count_diagnostics(diagnosis_id)
+    return Response({"total_diagnostics": total})
+
+
+@api_view(["GET"])
+@authentication_classes((CustomUserAuthentication,))
+@permission_classes((IsAuthenticated,))
 def get_patients_by_age(request, age):
     try:
         patients = fetch_patients_by_age(age)
+    except NotFound:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = PatientSerializer(patients, many=True)
+    return Response(data=serializer.data)
+
+
+@api_view(["GET"])
+@authentication_classes((CustomUserAuthentication,))
+@permission_classes((IsAuthenticated,))
+def get_patients_by_age_range(request, age_range):
+    try:
+        patients = fetch_patients_by_age_range(age_range)
+    except NotFound:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = PatientSerializer(patients, many=True)
+    return Response(data=serializer.data)
+
+
+@api_view(["GET"])
+@authentication_classes((CustomUserAuthentication,))
+@permission_classes((IsAuthenticated,))
+def get_total_by_age_range(request, age_range):
+    total = count_patients_by_age_range(age_range)
+    return Response({"total_age_range": total})
+
+
+@api_view(["GET"])
+@authentication_classes((CustomUserAuthentication,))
+@permission_classes((IsAuthenticated,))
+def get_patients_by_gender(request, gender):
+    try:
+        patients = fetch_patients_by_gender(gender)
+    except NotFound:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = PatientSerializer(patients, many=True)
+    return Response(data=serializer.data)
+
+
+@api_view(["GET"])
+@authentication_classes((CustomUserAuthentication,))
+@permission_classes((IsAuthenticated,))
+def get_patients_by_sector(request, sector_id=None):
+    try:
+        patients = fetch_patients_by_sector(sector_id)
+    except NotFound:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = PatientSerializer(patients, many=True)
+    return Response(data=serializer.data)
+
+
+@api_view(["GET"])
+@authentication_classes((CustomUserAuthentication,))
+@permission_classes((IsAuthenticated,))
+def get_patients_by_groups(request, group_id=None):
+    try:
+        patients = fetch_patients_by_groups(group_id)
     except NotFound:
         return Response(status=status.HTTP_404_NOT_FOUND)
 

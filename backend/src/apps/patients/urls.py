@@ -13,7 +13,13 @@ from .apis import (
     get_patients_pregnants,
     get_total_pregnants,
     get_patients_by_diagnosis,
+    get_total_diagnostics,
     get_patients_by_age,
+    get_patients_by_age_range,
+    get_total_by_age_range,
+    get_patients_by_gender,
+    get_patients_by_sector,
+    get_patients_by_groups,
 )
 from .views import PatientViewSet
 
@@ -62,9 +68,54 @@ urlpatterns = [
         name="patients-by-diagnosis",
     ),
     path(
+        "total-diagnostics/<int:diagnosis_id>",
+        get_total_diagnostics,
+        name="total-diagnostics",
+    ),
+    path(
+        "diagnosis/",
+        get_patients_by_diagnosis,
+        name="patients-by-diagnosis",
+    ),
+    path(
         "age/<int:age>",
         get_patients_by_age,
         name="patients-by-age",
+    ),
+    path(
+        "age/<str:age_range>",
+        get_patients_by_age_range,
+        name="patients-by-age-range",
+    ),
+    path(
+        "total-age/<str:age_range>",
+        get_total_by_age_range,
+        name="total-by-age-range",
+    ),
+    path(
+        "gender/<str:gender>",
+        get_patients_by_gender,
+        name="patients-by-gender",
+    ),
+    path(
+        "sector/<int:sector_id>",
+        get_patients_by_sector,
+        name="patients-by-sector",
+    ),
+    path(
+        "sector/",
+        get_patients_by_sector,
+        name="patients-by-sector",
+    ),
+    path(
+        "group/<int:group_id>",
+        get_patients_by_groups,
+        name="patients-by-group",
+    ),
+    path(
+        "group/",
+        get_patients_by_groups,
+        name="patients-by-group",
     ),
 ]
 
