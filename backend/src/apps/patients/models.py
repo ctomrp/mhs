@@ -25,8 +25,8 @@ class Patient(models.Model):
     gender = models.IntegerField(choices=GENDER_CHOICES, verbose_name=_("Gender"))
     sector = models.ForeignKey(
         Sector,
-        on_delete=models.SET_DEFAULT,
-        default=_("Unassigned"),
+        on_delete=models.SET_NULL,
+        null=True,
         verbose_name=_("Sector"),
     )
     address = models.CharField(max_length=255, null=True, verbose_name=_("Address"))
@@ -37,10 +37,10 @@ class Patient(models.Model):
     suicide_attempt = models.BooleanField(verbose_name=_("Suicide attempt"))
     attempt_date = models.DateField(null=True, verbose_name=_("Attempt date"))
     diagnostics = models.ManyToManyField(
-        Diagnosis, related_name="patients", verbose_name=_("Diagnostics")
+        Diagnosis, related_name="patients", verbose_name=_("Diagnostics"), blank=True
     )
     groups = models.ManyToManyField(
-        Group, related_name="patients", verbose_name=_("Groups")
+        Group, related_name="patients", verbose_name=_("Groups"), blank=True
     )
     ecicep_score = models.IntegerField(
         choices=ECICEP_SCORE_CHOICES, verbose_name=_("ECICEP score")

@@ -13,14 +13,16 @@ class Appointment(models.Model):
     attended = models.BooleanField(verbose_name=_("Attended"))
     professional = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.SET_DEFAULT,
-        default=_("Professional deleted"),
-        verbose_name=_("Professional"),
+        on_delete=models.SET_NULL,
+        default=None,
+        null=True,
+        verbose_name=_("Profesional"),
     )
     patient = models.ForeignKey(
         Patient,
-        on_delete=models.SET_DEFAULT,
-        default=_("Patient deleted"),
+        on_delete=models.SET_NULL,
+        default=None,
+        null=True,
         verbose_name=_("Patient"),
     )
     observations = models.TextField(null=True, verbose_name=_("Observations"))
