@@ -55,10 +55,13 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     first_name = models.CharField(max_length=30, verbose_name=_("First name"))
     last_name = models.CharField(max_length=30, verbose_name=_("Last name"))
-    dni = models.CharField(max_length=10, verbose_name=_("DNI"))
+    dni = models.CharField(max_length=10, verbose_name=_("DNI"), unique=True)
     email = models.EmailField(max_length=100, verbose_name=_("Email"), unique=True)
     password = models.CharField(max_length=16, verbose_name=_("Password"))
     username = None
     objects = UserManager()
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name", "dni"]
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"

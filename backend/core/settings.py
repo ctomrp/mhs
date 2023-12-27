@@ -34,6 +34,7 @@ THIRD_PARTY_APPS = [
 ]
 
 PROJECT_APPS = [
+    "src.apps.applied_tests",
     "src.apps.appointments",
     "src.apps.diagnostics",
     "src.apps.groups",

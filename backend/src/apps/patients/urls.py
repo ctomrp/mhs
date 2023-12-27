@@ -21,10 +21,11 @@ from .apis import (
     get_patients_by_sector,
     get_patients_by_groups,
 )
-from .views import PatientViewSet
+from .views import PatientViewSet, PatientTestViewSet
 
 patients_router = routers.DefaultRouter()
 patients_router.register(r"", PatientViewSet, "patients")
+patients_router.register(r"", PatientTestViewSet, "patients-tests")
 
 urlpatterns = [
     path("dni/<str:patient_dni>/", get_patient_by_dni, name="patient-by-dni"),
