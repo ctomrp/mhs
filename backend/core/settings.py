@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "America/Santiago"
 
 USE_I18N = True
 
@@ -136,6 +136,11 @@ CORS_ALLOW_CREDENTIALS = True
 AUTH_USER_MODEL = "users.User"
 
 REST_FRAMEWORK = {
-    # YOUR SETTINGS
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "MHS API",
+    "DESCRIPTION": "This is the MHS API. You can access the official repository here: https://github.com/ctomrp/mhs",
+    "VERSION": "1.0.0",
 }

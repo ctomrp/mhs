@@ -1,7 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 
-from .choices import ECICEP_SCORE_CHOICES, GENDER_CHOICES, PATIENT_STATUS_CHOICES
 from src.apps.diagnostics.models import Diagnosis
 from src.apps.groups.models import Group
 from src.apps.sectors.models import Sector
@@ -22,7 +21,12 @@ class Patient(models.Model):
         max_length=20, null=True, verbose_name=_("Second last name")
     )
     birthdate = models.DateField(verbose_name=_("Birthdate"))
-    gender = models.IntegerField(choices=GENDER_CHOICES, verbose_name=_("Gender"))
+    gender = models.ForeignKey(
+        "Gender",
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_("Gender"),
+    )
     sector = models.ForeignKey(
         Sector,
         on_delete=models.SET_NULL,
@@ -31,8 +35,11 @@ class Patient(models.Model):
     )
     address = models.CharField(max_length=255, null=True, verbose_name=_("Address"))
     phone = models.BigIntegerField(null=True, verbose_name=_("Phone number"))
-    patient_status = models.IntegerField(
-        choices=PATIENT_STATUS_CHOICES, verbose_name=_("Patient status")
+    patient_status = models.ForeignKey(
+        "PatientStatus",
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_("Patient status"),
     )
     suicide_attempt = models.BooleanField(verbose_name=_("Suicide attempt"))
     attempt_date = models.DateField(null=True, verbose_name=_("Attempt date"))
@@ -42,8 +49,11 @@ class Patient(models.Model):
     groups = models.ManyToManyField(
         Group, related_name="patients", verbose_name=_("Groups"), blank=True
     )
-    ecicep_score = models.IntegerField(
-        choices=ECICEP_SCORE_CHOICES, verbose_name=_("ECICEP score")
+    ecicep_score = models.ForeignKey(
+        "ECICEPScore",
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name=_("ECICEP score"),
     )
     is_ges = models.BooleanField(verbose_name=_("Is GES"))
     signed_ges = models.BooleanField(verbose_name=_("Signed GES"))
@@ -60,10 +70,40 @@ class Patient(models.Model):
     child_birthdate = models.DateField(null=True, verbose_name=_("Child birthdate"))
 
     def __str__(self):
-        name = (
-            self.first_name + self.middle_name + self.last_name + self.second_last_name
-        )
-        return f"{self.dni}, {name}"
+        name_parts = [
+            part
+            for part in [
+                self.first_name,
+                self.middle_name,
+                self.last_name,
+                self.second_last_name,
+            ]
+            if part is not None
+        ]
+        return " ".join(name_parts)
+
+
+class Gender(models.Model):
+    name = models.CharField(max_length=20, unique=True, verbose_name=_("Gender"))
+
+    def __str__(self):
+        return self.name
+
+
+class PatientStatus(models.Model):
+    name = models.CharField(
+        max_length=255, unique=True, verbose_name=_("Patient status")
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class ECICEPScore(models.Model):
+    name = models.CharField(max_length=2, unique=True, verbose_name=_("ECICEP score"))
+
+    def __str__(self):
+        return self.name
 
 
 class PatientTest(models.Model):

@@ -18,5 +18,5 @@ class PatientTestViewSet(ModelViewSet):
     authentication_classes = (CustomUserAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    serializer_class = PatientTestSerializer
     queryset = PatientTest.objects.all()
+    serializer_class = PatientTestSerializer

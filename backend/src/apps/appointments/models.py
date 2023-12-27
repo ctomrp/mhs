@@ -7,7 +7,7 @@ from src.apps.patients.models import Patient
 
 class Appointment(models.Model):
     attendance_date = models.DateField(verbose_name=_("Attendance date"))
-    attendance_recorded = models.DateField(
+    attendance_recorded = models.DateTimeField(
         auto_now_add=True, verbose_name=_("Attendance recorded")
     )
     attended = models.BooleanField(verbose_name=_("Attended"))
