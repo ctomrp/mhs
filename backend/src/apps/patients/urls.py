@@ -7,7 +7,7 @@ from .apis import (
     get_patient_by_diagnosis,
     get_patient_by_age,
     get_patient_by_age_range,
-    get_patient_by_gender,
+    get_patient_by_sex,
     get_patient_by_sector,
     get_patient_by_groups,
     get_patient_with_suicide_attempt,
@@ -15,17 +15,29 @@ from .apis import (
     get_patient_in_psychiatric_care,
     get_patient_pregnants,
     get_total_diagnostics,
+    get_total_diagnostics_by_group,
     get_total_patients_by_age_range,
     get_total_attempts,
     get_total_ges,
     get_total_in_psychiatric_care,
     get_total_pregnants,
 )
-from .views import PatientViewSet, PatientTestViewSet
+from .views import (
+    PatientViewSet,
+    PatientQuestionnaireViewSet,
+    PatientStatusViewSet,
+    ECICEPScoreViewSet,
+    SexViewSet,
+)
 
 patients_router = routers.DefaultRouter()
-patients_router.register(r"records", PatientViewSet, "patients")
-patients_router.register(r"tests", PatientTestViewSet, "patienttests")
+patients_router.register(r"records", PatientViewSet, "records")
+patients_router.register(
+    r"questionnaires", PatientQuestionnaireViewSet, "questionnaires"
+)
+patients_router.register(r"status", PatientStatusViewSet, "status")
+patients_router.register(r"ecicep", ECICEPScoreViewSet, "ecicep")
+patients_router.register(r"sex", SexViewSet, "sex")
 
 
 urlpatterns = [
@@ -47,7 +59,7 @@ urlpatterns = [
         get_patient_by_age_range,
         name="patient-by-age-range",
     ),
-    path("gender/<int:gender_id>", get_patient_by_gender, name="patient-by-gender"),
+    path("sex/<int:sex_id>", get_patient_by_sex, name="patient-by-sex"),
     path("sector/<int:sector_id>", get_patient_by_sector, name="patient-by-sector"),
     path("group/<int:group_id>", get_patient_by_groups, name="patient-by-group"),
     path(
@@ -66,6 +78,11 @@ urlpatterns = [
         "diagnosis-total/<int:diagnosis_id>",
         get_total_diagnostics,
         name="total_diagnostics",
+    ),
+    path(
+        "diagnosis-group-total/<str:diagnosis_id_and_group_id>",
+        get_total_diagnostics_by_group,
+        name="get_total_diagnostics_by_group",
     ),
     path(
         "age-range-total/<str:age_range>",

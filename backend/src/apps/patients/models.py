@@ -4,7 +4,7 @@ from django.db import models
 from src.apps.diagnostics.models import Diagnosis
 from src.apps.groups.models import Group
 from src.apps.sectors.models import Sector
-from src.apps.applied_tests.models import Test
+from src.apps.questionnaires.models import Questionnaire
 
 
 class Patient(models.Model):
@@ -21,11 +21,11 @@ class Patient(models.Model):
         max_length=20, null=True, verbose_name=_("Second last name")
     )
     birthdate = models.DateField(verbose_name=_("Birthdate"))
-    gender = models.ForeignKey(
-        "Gender",
+    sex = models.ForeignKey(
+        "Sex",
         on_delete=models.SET_NULL,
         null=True,
-        verbose_name=_("Gender"),
+        verbose_name=_("Sex"),
     )
     sector = models.ForeignKey(
         Sector,
@@ -70,21 +70,11 @@ class Patient(models.Model):
     child_birthdate = models.DateField(null=True, verbose_name=_("Child birthdate"))
 
     def __str__(self):
-        name_parts = [
-            part
-            for part in [
-                self.first_name,
-                self.middle_name,
-                self.last_name,
-                self.second_last_name,
-            ]
-            if part is not None
-        ]
-        return " ".join(name_parts)
+        return f"{self.first_name} {self.middle_name} {self.last_name} {self.second_last_name}"
 
 
-class Gender(models.Model):
-    name = models.CharField(max_length=20, unique=True, verbose_name=_("Gender"))
+class Sex(models.Model):
+    name = models.CharField(max_length=20, unique=True, verbose_name=_("Sex"))
 
     def __str__(self):
         return self.name
@@ -106,10 +96,12 @@ class ECICEPScore(models.Model):
         return self.name
 
 
-class PatientTest(models.Model):
+class PatientQuestionnaire(models.Model):
     patient = models.ForeignKey(
         "Patient", on_delete=models.CASCADE, verbose_name=_("Patient")
     )
-    test = models.ForeignKey(Test, on_delete=models.CASCADE, verbose_name=_("Test"))
+    questionnaire = models.ForeignKey(
+        Questionnaire, on_delete=models.CASCADE, verbose_name=_("Questionnaire")
+    )
     score = models.CharField(max_length=255, verbose_name=_("Score"))
     observations = models.TextField(verbose_name=_("Observations"))

@@ -54,7 +54,7 @@ def get_appointments_by_date_range(request, date_range):
 @permission_classes((IsAuthenticated,))
 def get_total_appointments_by_professional(request, professional_id):
     total = count_appointments_by_professional(professional_id)
-    return Response({"total_appointments": total})
+    return Response({"total_appointments_by_professional": total})
 
 
 @api_view(["GET"])
@@ -63,3 +63,16 @@ def get_total_appointments_by_professional(request, professional_id):
 def get_total_appointments_by_date_range(request, date_range):
     total = count_appointments_by_date_range(date_range)
     return Response({"total_appointments_by_date_range": total})
+
+
+# @api_view(["GET"])
+# @authentication_classes((CustomUserAuthentication,))
+# @permission_classes((IsAuthenticated,))
+# def get_daily_report(request):
+#     professional = request.user
+#     today = timezone.now().date()
+#     appointments_collection = Appointment.objects.filter(
+#         professional=professional, attendance_date=today, attended=True
+#     )
+#     serializer = AppointmentSerializer(appointments_collection, many=True)
+#     return Response(serializer.data)

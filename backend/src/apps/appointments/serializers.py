@@ -7,3 +7,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
         fields = "__all__"
+        read_only_fields = [
+            "attendance_recorded",
+            "professional",
+        ]

@@ -7,6 +7,7 @@ from .apis import (
     get_appointments_by_date_range,
     get_total_appointments_by_professional,
     get_total_appointments_by_date_range,
+    # get_daily_report,
 )
 from .views import AppointmentViewSet
 
@@ -30,7 +31,7 @@ urlpatterns = [
         name="appointments_by_date_range",
     ),
     path(
-        "total-professional/<int:professional_id>",
+        "professional-total/<int:professional_id>",
         get_total_appointments_by_professional,
         name="total_appointments_by_professional",
     ),
@@ -39,5 +40,6 @@ urlpatterns = [
         get_total_appointments_by_date_range,
         name="total_appointments_by_date_range",
     ),
+    # path("daily-report/", get_daily_report, name="daily_report"),
 ]
 urlpatterns += appointments_router.urls

@@ -1,5 +1,7 @@
 from django.db import connection
 
+# from django.utils import timezone
+
 from .models import Appointment
 
 
@@ -34,3 +36,12 @@ def count_appointments_by_date_range(date_range) -> int:
         cursor.execute(query, [begin_date, end_date])
         total = cursor.fetchone()
     return total[0] if total else 0
+
+
+# def fetch_daily_report(request) -> list["Appointment"]:
+#     professional = request.user
+#     today = timezone.now().date()
+#     appointments_collection = Appointment.objects.filter(
+#         professional=professional, attendance_date=today, attended=True
+#     )
+#     return [appointments for appointments in appointments_collection]

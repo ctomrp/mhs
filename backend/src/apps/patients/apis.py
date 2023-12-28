@@ -91,9 +91,9 @@ def get_patient_by_age_range(request, age_range):
 @api_view(["GET"])
 @authentication_classes((CustomUserAuthentication,))
 @permission_classes((IsAuthenticated,))
-def get_patient_by_gender(request, gender_id):
+def get_patient_by_sex(request, sex_id):
     try:
-        patients = fetch_patient_by_gender(gender_id)
+        patients = fetch_patient_by_sex(sex_id)
     except NotFound:
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = PatientSerializer(patients, many=True)
@@ -177,6 +177,14 @@ def get_patient_pregnants(request):
 @permission_classes((IsAuthenticated,))
 def get_total_diagnostics(request, diagnosis_id):
     total = count_diagnostics(diagnosis_id)
+    return Response({"total_diagnostics": total})
+
+
+@api_view(["GET"])
+@authentication_classes((CustomUserAuthentication,))
+@permission_classes((IsAuthenticated,))
+def get_total_diagnostics_by_group(request, diagnosis_id_and_group_id):
+    total = count_diagnostics_by_group(diagnosis_id_and_group_id)
     return Response({"total_diagnostics": total})
 
 

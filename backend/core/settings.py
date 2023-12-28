@@ -29,16 +29,16 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "corsheaders",
-    "drf_spectacular",
+    # "drf_spectacular",
     "rest_framework",
 ]
 
 PROJECT_APPS = [
-    "src.apps.applied_tests",
     "src.apps.appointments",
     "src.apps.diagnostics",
     "src.apps.groups",
     "src.apps.patients",
+    "src.apps.questionnaires",
     "src.apps.reports",
     "src.apps.sectors",
     "src.apps.users",
@@ -135,12 +135,12 @@ CORS_ALLOW_CREDENTIALS = True
 
 AUTH_USER_MODEL = "users.User"
 
-REST_FRAMEWORK = {
-    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-}
+# REST_FRAMEWORK = {
+#     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+# }
 
-SPECTACULAR_SETTINGS = {
-    "TITLE": "MHS API",
-    "DESCRIPTION": "This is the MHS API. You can access the official repository here: https://github.com/ctomrp/mhs",
-    "VERSION": "1.0.0",
-}
+# SPECTACULAR_SETTINGS = {
+#     "TITLE": "MHS API",
+#     "DESCRIPTION": "This is the MHS API. You can access the official repository here: https://github.com/ctomrp/mhs",
+#     "VERSION": "1.0.0",
+# }
