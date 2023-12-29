@@ -105,3 +105,6 @@ class PatientQuestionnaire(models.Model):
     )
     score = models.CharField(max_length=255, verbose_name=_("Score"))
     observations = models.TextField(verbose_name=_("Observations"))
+    evaluation_date = models.DateField(
+        null=True, auto_now_add=True, verbose_name=_("Evaluation date")
+    )

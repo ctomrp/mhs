@@ -12,3 +12,8 @@ class AppointmentViewSet(viewsets.ModelViewSet):
 
     queryset = Appointment.objects.all()
     serializer_class = AppointmentSerializer
+
+    def perform_create(self, serializer):
+        if self.request.user:
+            serializer.validated_data["professional"] = self.request.user
+        serializer.save()

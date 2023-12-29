@@ -37,7 +37,7 @@ def fetch_patient_by_age(age) -> list["Patient"]:
 
 
 def fetch_patient_by_age_range(age_range) -> list["Patient"]:
-    min_age, max_age = map(int, age_range.split(","))
+    min_age, max_age = map(int, age_range.split("$"))
     query = """SELECT * FROM patients_patient WHERE CAST((julianday('now') - julianday(birthdate)) / 365.25 AS INTEGER) BETWEEN %s AND %s;"""
     patient_collection = Patient.objects.raw(query, [min_age, max_age])
     return [patient for patient in patient_collection]
@@ -85,13 +85,13 @@ def count_diagnostics(diagnosis_id) -> int:
 
 
 def count_diagnostics_by_group(diagnosis_id_and_group_id) -> int:
-    diagnosis_id, group_id = map(int, diagnosis_id_and_group_id.split(","))
+    diagnosis_id, group_id = map(int, diagnosis_id_and_group_id.split("$"))
     total = Patient.objects.filter(diagnostics=diagnosis_id, groups=group_id).count()
     return total
 
 
 def count_patients_by_age_range(age_range) -> int:
-    min_age, max_age = map(int, age_range.split(","))
+    min_age, max_age = map(int, age_range.split("$"))
     query = """SELECT COUNT(*) as count FROM patients_patient WHERE CAST((julianday('now') - julianday(birthdate)) / 365.25 AS INTEGER) BETWEEN %s AND %s;"""
     with connection.cursor() as cursor:
         cursor.execute(query, [min_age, max_age])

@@ -11,3 +11,8 @@ class AppointmentSerializer(serializers.ModelSerializer):
             "attendance_recorded",
             "professional",
         ]
+
+    def validate_patient(self, value):
+        if value is None:
+            raise serializers.ValidationError("Patient field is required.")
+        return value

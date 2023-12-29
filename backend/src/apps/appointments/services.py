@@ -18,7 +18,7 @@ def fetch_appointments_by_date(date) -> list["Appointment"]:
 
 
 def fetch_appointments_by_date_range(date_range) -> list["Appointment"]:
-    begin_date, end_date = map(str, date_range.split(","))
+    begin_date, end_date = map(str, date_range.split("$"))
     query = """SELECT * FROM appointments_appointment WHERE julianday(attendance_date) BETWEEN julianday(%s) AND julianday(%s);"""
     appointments_collection = Appointment.objects.raw(query, [begin_date, end_date])
     return [appointments for appointments in appointments_collection]
